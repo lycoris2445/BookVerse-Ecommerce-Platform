@@ -33,9 +33,11 @@ export default function ProductList({ query = "", category = "all", onAddToCart,
 
         const response = await catalogService.getBooks(params);
         
-        if (response.success) {
-          setBooks(response.data || []);
-          setTotalPages(Math.ceil((response.total || 0) / itemsPerPage));
+        // Axios trả về { data, status, ... }
+        if (response.status === 200 && response.data) {
+          const data = response.data;
+          setBooks(data.results || data || []);
+          setTotalPages(Math.ceil((data.count || data.total || 0) / itemsPerPage));
         }
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -53,7 +55,7 @@ export default function ProductList({ query = "", category = "all", onAddToCart,
     const fetchCategories = async () => {
       try {
         const response = await catalogService.getCategories();
-        if (response.success) {
+        if (response.status === 200 && response.data) {
           setCategories(response.data || []);
         }
       } catch (error) {

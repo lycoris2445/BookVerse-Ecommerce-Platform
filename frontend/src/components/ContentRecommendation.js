@@ -50,9 +50,11 @@ const ContentRecommendation = ({ title = "Gợi ý dành cho bạn", maxItems = 
     setError(null);
 
     try {
-      const data = await RecommendationService.getContentBasedRecommendations(maxItems);
-      setRecommendations(data.results || []);
-      setProcessingTime(data.processing_time || 0);
+      const response = await RecommendationService.getContentBasedRecommendations({ k: maxItems });
+      if (response.status === 200 && response.data) {
+        setRecommendations(response.data.results || response.data || []);
+        setProcessingTime(response.data.processing_time || 0);
+      }
       
     } catch (err) {
       console.error('Error fetching recommendations:', err);
