@@ -8,3 +8,4 @@ gunicorn>=21.2.0
 whitenoise>=6.5.0
 dj-database-url>=3.0.0
 requests>=2.31.0
+PyJWT>=2.0.0
