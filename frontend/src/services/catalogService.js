@@ -13,7 +13,7 @@ export async function getBooks(params = {}) {
     });
     
     const queryString = queryParams.toString();
-    const endpoint = `/catalog/books/${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/v1/catalog/books/${queryString ? `?${queryString}` : ''}`;
     
     const response = await ApiService.request(endpoint, { auth: false });
     
@@ -39,7 +39,7 @@ export async function getBooks(params = {}) {
 // Lấy chi tiết một cuốn sách
 export async function getBook(bookId) {
   try {
-    return await ApiService.request(`/catalog/books/${bookId}/`, { auth: false });
+    return await ApiService.request(`/api/v1/catalog/books/${bookId}/`, { auth: false });
   } catch (error) {
     console.error('Get book failed:', error);
     throw error;
@@ -79,7 +79,7 @@ export async function getBooksByCategory(categoryId, params = {}) {
 // Lấy danh sách categories
 export async function getCategories() {
   try {
-    const response = await ApiService.request('/catalog/categories/', { auth: false });
+    const response = await ApiService.request('/api/v1/catalog/categories/', { auth: false });
     
     // Transform DRF pagination response to expected format
     return {
@@ -109,7 +109,7 @@ export async function getAuthors(params = {}) {
     });
     
     const queryString = queryParams.toString();
-    const endpoint = `/catalog/authors/${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/v1/catalog/authors/${queryString ? `?${queryString}` : ''}`;
     
     return await ApiService.request(endpoint, { auth: false });
   } catch (error) {
@@ -121,7 +121,7 @@ export async function getAuthors(params = {}) {
 // Lấy chi tiết author
 export async function getAuthor(authorId) {
   try {
-    return await ApiService.request(`/catalog/authors/${authorId}/`, { auth: false });
+    return await ApiService.request(`/api/v1/catalog/authors/${authorId}/`, { auth: false });
   } catch (error) {
     console.error('Get author failed:', error);
     throw error;
@@ -131,7 +131,7 @@ export async function getAuthor(authorId) {
 // Lấy danh sách publishers
 export async function getPublishers() {
   try {
-    return await ApiService.request('/catalog/publishers/', { auth: false });
+    return await ApiService.request('/api/v1/catalog/publishers/', { auth: false });
   } catch (error) {
     console.error('Get publishers failed:', error);
     throw error;
@@ -141,7 +141,7 @@ export async function getPublishers() {
 // Lấy chi tiết publisher
 export async function getPublisher(publisherId) {
   try {
-    return await ApiService.request(`/catalog/publishers/${publisherId}/`, { auth: false });
+    return await ApiService.request(`/api/v1/catalog/publishers/${publisherId}/`, { auth: false });
   } catch (error) {
     console.error('Get publisher failed:', error);
     throw error;

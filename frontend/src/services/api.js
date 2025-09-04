@@ -45,7 +45,7 @@ class ApiService {
 
   // Generic request method
   async request(endpoint, options = {}) {
-    const url = `${this.baseURL}/api/v1${endpoint}`;
+    const url = `${this.baseURL}${endpoint}`;
     const config = {
       headers: this.getHeaders(options.auth !== false),
       ...options,

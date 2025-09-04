@@ -4,7 +4,7 @@ class CartService {
   // Lấy giỏ hàng hiện tại
   async getCart() {
     try {
-      return await ApiService.request('/orders/cart/');
+      return await ApiService.request('/api/v1/orders/cart/');
     } catch (error) {
       console.error('Get cart failed:', error);
       throw error;
@@ -14,7 +14,7 @@ class CartService {
   // Thêm sản phẩm vào giỏ hàng
   async addToCart(bookId, quantity = 1) {
     try {
-      const response = await ApiService.request('/orders/cart/items/', {
+      const response = await ApiService.request('/api/v1/orders/cart/items/', {
         method: 'POST',
         body: JSON.stringify({
           book_id: bookId,
@@ -32,7 +32,7 @@ class CartService {
   // Cập nhật số lượng sản phẩm trong giỏ hàng
   async updateItemQuantity(bookId, quantity) {
     try {
-      const response = await ApiService.request('/orders/cart/items/qty/', {
+      const response = await ApiService.request('/api/v1/orders/cart/items/qty/', {
         method: 'PATCH',
         body: JSON.stringify({
           book_id: bookId,
@@ -50,7 +50,7 @@ class CartService {
   // Xóa sản phẩm khỏi giỏ hàng
   async removeFromCart(bookId) {
     try {
-      const response = await ApiService.request(`/orders/cart/items/${bookId}/`, {
+      const response = await ApiService.request(`/api/v1/orders/cart/items/${bookId}/`, {
         method: 'DELETE'
       });
       

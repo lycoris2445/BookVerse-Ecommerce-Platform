@@ -4,7 +4,7 @@ class AuthService {
   // Đăng ký người dùng mới
   async register(userData) {
     try {
-      const response = await ApiService.request('/users/register/', {
+      const response = await ApiService.request('/api/v1/users/register/', {
         method: 'POST',
         body: JSON.stringify(userData),
         auth: false
@@ -25,7 +25,7 @@ class AuthService {
   // Đăng nhập
   async login(credentials) {
     try {
-      const response = await ApiService.request('/users/login/', {
+      const response = await ApiService.request('/api/v1/users/login/', {
         method: 'POST',
         body: JSON.stringify(credentials),
         auth: false
@@ -46,7 +46,7 @@ class AuthService {
   // Đăng xuất
   async logout() {
     try {
-      await ApiService.request('/users/logout/', {
+      await ApiService.request('/api/v1/users/logout/', {
         method: 'POST'
       });
     } catch (error) {
@@ -61,7 +61,7 @@ class AuthService {
   // Lấy thông tin user hiện tại
   async getCurrentUser() {
     try {
-      const response = await ApiService.request('/users/me/');
+      const response = await ApiService.request('/api/v1/users/me/');
       return response;
     } catch (error) {
       console.error('Get current user failed:', error);

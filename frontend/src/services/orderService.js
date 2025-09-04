@@ -4,7 +4,7 @@ class OrderService {
   // Tạo đơn hàng mới
   async createOrder(orderData) {
     try {
-      const response = await ApiService.request('/orders/', {
+      const response = await ApiService.request('/api/v1/orders/', {
         method: 'POST',
         body: JSON.stringify(orderData)
       });
@@ -19,7 +19,7 @@ class OrderService {
   // Tạo đơn hàng từ giỏ hàng
   async createOrderFromCart(orderData = {}) {
     try {
-      const response = await ApiService.request('/orders/from-cart/', {
+      const response = await ApiService.request('/api/v1/orders/from-cart/', {
         method: 'POST',
         body: JSON.stringify(orderData)
       });
@@ -42,7 +42,7 @@ class OrderService {
       });
       
       const queryString = queryParams.toString();
-      const endpoint = `/orders/list/${queryString ? `?${queryString}` : ''}`;
+      const endpoint = `/api/v1/orders/list/${queryString ? `?${queryString}` : ''}`;
       
       return await ApiService.request(endpoint);
     } catch (error) {
@@ -54,7 +54,7 @@ class OrderService {
   // Lấy chi tiết một đơn hàng
   async getOrder(orderId) {
     try {
-      return await ApiService.request(`/orders/${orderId}/`);
+      return await ApiService.request(`/api/v1/orders/${orderId}/`);
     } catch (error) {
       console.error('Get order failed:', error);
       throw error;
@@ -64,7 +64,7 @@ class OrderService {
   // Hủy đơn hàng
   async cancelOrder(orderId, reason = '') {
     try {
-      const response = await ApiService.request(`/orders/${orderId}/cancel/`, {
+      const response = await ApiService.request(`/api/v1/orders/${orderId}/cancel/`, {
         method: 'PATCH',
         body: JSON.stringify({ reason })
       });

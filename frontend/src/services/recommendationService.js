@@ -13,7 +13,7 @@ class RecommendationService {
    */
   async getContentBasedRecommendations(k = 10) {
     try {
-      const response = await ApiService.request(`/recommendations/v1/content/?k=${k}`, {
+      const response = await ApiService.request(`/api/v1/recommendations/v1/content/?k=${k}`, {
         method: 'GET',
         auth: false // Don't require auth for now since we use AllowAny
       });
@@ -29,7 +29,7 @@ class RecommendationService {
    */
   async getRecommendations(customerId, limit = 10) {
     try {
-      const response = await ApiService.request(`/recommendations/v1/recommendations/${customerId}/?limit=${limit}`, {
+      const response = await ApiService.request(`/api/v1/recommendations/v1/recommendations/${customerId}/?limit=${limit}`, {
         method: 'GET',
         auth: false
       });
@@ -45,7 +45,7 @@ class RecommendationService {
    */
   async getTrendingBooks(days = 7, limit = 10) {
     try {
-      const response = await ApiService.request(`/recommendations/v1/trending/?days=${days}&limit=${limit}`, {
+      const response = await ApiService.request(`/api/v1/recommendations/v1/trending/?days=${days}&limit=${limit}`, {
         method: 'GET',
         auth: false
       });
@@ -68,7 +68,7 @@ class RecommendationService {
         session_id: sessionId || this.getSessionId()
       };
 
-      const response = await ApiService.request('/recommendations/v1/activity/log/', {
+      const response = await ApiService.request('/api/v1/recommendations/v1/activity/log/', {
         method: 'POST',
         body: JSON.stringify(data)
       });
@@ -85,7 +85,7 @@ class RecommendationService {
    */
   async getUserActivity(customerId, days = 30) {
     try {
-      const response = await ApiService.request(`/recommendations/v1/activity/${customerId}/?days=${days}`, {
+      const response = await ApiService.request(`/api/v1/recommendations/v1/activity/${customerId}/?days=${days}`, {
         method: 'GET',
         auth: false
       });

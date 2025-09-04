@@ -4,7 +4,7 @@ class PaymentService {
   // PayPal Integration Methods
   async createPayPalOrder(orderId) {
     try {
-      const response = await ApiService.request('/payments/paypal/create-order/', {
+      const response = await ApiService.request('/api/v1/payments/paypal/create-order/', {
         method: 'POST',
         body: JSON.stringify({ order_id: orderId })
       });
@@ -18,7 +18,7 @@ class PaymentService {
 
   async capturePayPalPayment(paypalOrderId) {
     try {
-      const response = await ApiService.request('/payments/paypal/capture/', {
+      const response = await ApiService.request('/api/v1/payments/paypal/capture/', {
         method: 'POST',
         body: JSON.stringify({ paypal_order_id: paypalOrderId })
       });
@@ -34,7 +34,7 @@ class PaymentService {
   // Khởi tạo thanh toán
   async chargePayment(paymentData) {
     try {
-      const response = await ApiService.request('/payments/charge/', {
+      const response = await ApiService.request('/api/v1/payments/charge/', {
         method: 'POST',
         body: JSON.stringify(paymentData)
       });
@@ -49,7 +49,7 @@ class PaymentService {
   // Lấy trạng thái thanh toán
   async getPaymentStatus(paymentId) {
     try {
-      return await ApiService.request(`/payments/${paymentId}/status/`);
+      return await ApiService.request(`/api/v1/payments/${paymentId}/status/`);
     } catch (error) {
       console.error('Get payment status failed:', error);
       throw error;
@@ -59,7 +59,7 @@ class PaymentService {
   // Lấy thông tin thanh toán của đơn hàng
   async getOrderPayment(orderId) {
     try {
-      return await ApiService.request(`/payments/order/${orderId}/`);
+      return await ApiService.request(`/api/v1/payments/order/${orderId}/`);
     } catch (error) {
       console.error('Get order payment failed:', error);
       throw error;
@@ -69,7 +69,7 @@ class PaymentService {
   // Lấy thông tin sandbox (môi trường test)
   async getSandboxInfo() {
     try {
-      return await ApiService.request('/payments/sandbox/info/', { auth: false });
+      return await ApiService.request('/api/v1/payments/sandbox/info/', { auth: false });
     } catch (error) {
       console.error('Get sandbox info failed:', error);
       // Return default sandbox info
@@ -88,7 +88,7 @@ class PaymentService {
   // Simulate webhook (môi trường test)
   async simulateWebhook(paymentId, status = 'success') {
     try {
-      const response = await ApiService.request(`/payments/sandbox/webhook/${paymentId}/`, {
+      const response = await ApiService.request(`/api/v1/payments/sandbox/webhook/${paymentId}/`, {
         method: 'POST',
         body: JSON.stringify({ status })
       });

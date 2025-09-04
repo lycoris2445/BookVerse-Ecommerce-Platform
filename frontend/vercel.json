@@ -4,12 +4,11 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
+      "config": { "distDir": "build" }
     }
   ],
   "routes": [
+    { "handle": "filesystem" },
     {
       "src": "/static/(.*)",
       "headers": {
@@ -20,9 +19,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "env": {
-    "REACT_APP_API_URL": "@react_app_api_url",
-    "REACT_APP_API_BASE_URL": "@react_app_api_base_url"
-  }
+  ]
 }
