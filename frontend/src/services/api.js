@@ -1,73 +1,43 @@
-// API Configuration và Base Service
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
+// src/services/api.js
+import axios from "axios";
+
+export const API_BASE =
+  process.env.REACT_APP_API_BASE_URL ||
   (process.env.NODE_ENV === 'production' 
-    ? 'https://ecomtech.onrender.com' 
-    : 'http://localhost:8000');
+    ? 'https://ecomtech.onrender.com/api/v1'
+    : 'http://localhost:8000/api/v1'); // only for local dev
 
-class ApiService {
-  constructor() {
-    this.baseURL = API_BASE_URL;
-  }
+const api = axios.create({
+  baseURL: API_BASE,           // <-- ĐÃ có /api/v1
+  withCredentials: false,      // chỉ bật true nếu cần cookie/session
+});
 
-  // Get current token (realtime)
-  getToken() {
-    return localStorage.getItem('auth_token') || 
-           localStorage.getItem('access_token') || 
-           localStorage.getItem('authToken');
-  }
+// Chỉ gắn Authorization cho endpoint cần auth
+const NO_AUTH_PREFIXES = [
+  "/catalog/categories",
+  "/catalog/books",
+  "/healthz",
+  "/swagger", "/schema", "/docs"
+];
 
-  // Helper method to get headers
-  getHeaders(includeAuth = true) {
-    const headers = {
-      'Content-Type': 'application/json',
-    };
-    
-    if (includeAuth) {
-      const token = this.getToken();
-      if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-    }
-    
-    return headers;
-  }
-
-  // Helper method to handle response
-  async handleResponse(response) {
-    const data = await response.json().catch(() => null);
-    
-    if (!response.ok) {
-      throw new Error(data?.message || data?.detail || `HTTP Error: ${response.status}`);
-    }
-    
-    return data;
-  }
-
-  // Generic request method
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      headers: this.getHeaders(options.auth !== false),
-      ...options,
-    };
-
-    try {
-      const response = await fetch(url, config);
-      return await this.handleResponse(response);
-    } catch (error) {
-      console.error(`API Request failed: ${endpoint}`, error);
-      throw error;
+api.interceptors.request.use((config) => {
+  const needAuth = !NO_AUTH_PREFIXES.some((p) => config.url?.startsWith(p));
+  const token = localStorage.getItem("accessToken");
+  if (needAuth && token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    // với GET/public đừng tự set Content-Type → tránh preflight
+    if (config.method?.toLowerCase() === "get") {
+      delete config.headers["Content-Type"];
     }
   }
+  return config;
+});
 
-  // Update token
-  setToken(token) {
-    if (token) {
-      localStorage.setItem('auth_token', token);
-    } else {
-      localStorage.removeItem('auth_token');
-    }
-  }
+if (import.meta?.env?.MODE === "development" || process.env.NODE_ENV !== "production") {
+  // Debug: in ra base URL 1 lần
+  // eslint-disable-next-line no-console
+  console.log("[API_BASE]", API_BASE);
 }
 
-export default new ApiService();
+export default api;

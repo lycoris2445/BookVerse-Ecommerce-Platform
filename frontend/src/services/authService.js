@@ -1,21 +1,18 @@
-import ApiService from './api';
+// src/services/authService.js
+import api from './api';
 
 class AuthService {
   // Đăng ký người dùng mới
   async register(userData) {
     try {
-      const response = await ApiService.request('/api/v1/users/register/', {
-        method: 'POST',
-        body: JSON.stringify(userData),
-        auth: false
-      });
+      const response = await api.post('/users/register/', userData);
       
-      if (response.token) {
-        ApiService.setToken(response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
+      if (response.data.token) {
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       }
       
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Registration failed:', error);
       throw error;
@@ -25,18 +22,14 @@ class AuthService {
   // Đăng nhập
   async login(credentials) {
     try {
-      const response = await ApiService.request('/api/v1/users/login/', {
-        method: 'POST',
-        body: JSON.stringify(credentials),
-        auth: false
-      });
+      const response = await api.post('/users/login/', credentials);
       
-      if (response.token) {
-        ApiService.setToken(response.token);
-        localStorage.setItem('user', JSON.stringify(response.user));
+      if (response.data.token) {
+        localStorage.setItem('accessToken', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       }
       
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Login failed:', error);
       throw error;
@@ -46,14 +39,12 @@ class AuthService {
   // Đăng xuất
   async logout() {
     try {
-      await ApiService.request('/api/v1/users/logout/', {
-        method: 'POST'
-      });
+      await api.post('/users/logout/');
     } catch (error) {
       console.error('Logout failed:', error);
     } finally {
       // Luôn clear local storage
-      ApiService.setToken(null);
+      localStorage.removeItem('accessToken');
       localStorage.removeItem('user');
     }
   }
@@ -61,8 +52,8 @@ class AuthService {
   // Lấy thông tin user hiện tại
   async getCurrentUser() {
     try {
-      const response = await ApiService.request('/api/v1/users/me/');
-      return response;
+      const response = await api.get('/users/me/');
+      return response.data;
     } catch (error) {
       console.error('Get current user failed:', error);
       throw error;
@@ -82,7 +73,7 @@ class AuthService {
 
   // Kiểm tra xem user có đăng nhập không
   isAuthenticated() {
-    return !!ApiService.token && !!this.getUserFromStorage();
+    return !!localStorage.getItem('accessToken') && !!this.getUserFromStorage();
   }
 
   // Refresh user data

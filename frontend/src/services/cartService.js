@@ -1,10 +1,12 @@
-import ApiService from './api';
+// src/services/cartService.js
+import api from './api';
 
 class CartService {
   // Lấy giỏ hàng hiện tại
   async getCart() {
     try {
-      return await ApiService.request('/api/v1/orders/cart/');
+      const response = await api.get('/orders/cart/');
+      return response.data;
     } catch (error) {
       console.error('Get cart failed:', error);
       throw error;
@@ -14,15 +16,12 @@ class CartService {
   // Thêm sản phẩm vào giỏ hàng
   async addToCart(bookId, quantity = 1) {
     try {
-      const response = await ApiService.request('/api/v1/orders/cart/items/', {
-        method: 'POST',
-        body: JSON.stringify({
-          book_id: bookId,
-          qty: quantity
-        })
+      const response = await api.post('/orders/cart/items/', {
+        book_id: bookId,
+        qty: quantity
       });
       
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Add to cart failed:', error);
       throw error;
@@ -32,15 +31,12 @@ class CartService {
   // Cập nhật số lượng sản phẩm trong giỏ hàng
   async updateItemQuantity(bookId, quantity) {
     try {
-      const response = await ApiService.request('/api/v1/orders/cart/items/qty/', {
-        method: 'PATCH',
-        body: JSON.stringify({
-          book_id: bookId,
-          qty: quantity
-        })
+      const response = await api.patch('/orders/cart/items/qty/', {
+        book_id: bookId,
+        qty: quantity
       });
       
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Update cart item quantity failed:', error);
       throw error;
@@ -50,11 +46,9 @@ class CartService {
   // Xóa sản phẩm khỏi giỏ hàng
   async removeFromCart(bookId) {
     try {
-      const response = await ApiService.request(`/api/v1/orders/cart/items/${bookId}/`, {
-        method: 'DELETE'
-      });
+      const response = await api.delete(`/orders/cart/items/${bookId}/`);
       
-      return response;
+      return response.data;
     } catch (error) {
       console.error('Remove from cart failed:', error);
       throw error;
