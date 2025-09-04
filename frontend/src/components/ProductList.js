@@ -31,7 +31,7 @@ export default function ProductList({ query = "", category = "all", onAddToCart,
           params.search = query.trim();
         }
 
-        const response = await catalogService.getBooks(params);
+  const response = await catalogService.getBooks(params);
         
         // Axios trả về { data, status, ... }
         if (response.status === 200 && response.data) {
