@@ -5,7 +5,7 @@ export * as CatalogService from './catalogService'; // Changed to named exports
 export { default as CartService } from './cartService';
 export { default as OrderService } from './orderService';
 export { default as PaymentService } from './paymentService';
-export { default as RecommendationService } from './recommendationService';
+export * as RecommendationService from './recommendationService';
 export { default as TrackingService } from './tracking';
 
 // Re-export for backward compatibility
@@ -15,7 +15,7 @@ import * as CatalogService from './catalogService'; // Changed to import all fun
 import CartService from './cartService';
 import OrderService from './orderService';
 import PaymentService from './paymentService';
-import RecommendationService from './recommendationService';
+import * as RecommendationService from './recommendationService';
 import TrackingService from './tracking';
 
 // Export catalog functions directly for easy access
