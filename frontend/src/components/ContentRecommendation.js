@@ -211,65 +211,78 @@ const ContentRecommendation = ({ title = "Gợi ý dành cho bạn", maxItems = 
             className="rec-track"
             style={{ transform: `translateX(-${currentIndex * 25}%)` }}
           >
-            {recommendations.map((book) => (
-              <div key={book.book_id} className="rec-card">
-                <div className="book-image">
-                  <ProductImage
-                    src={book.image_url}
-                    alt={book.title}
-                    width="100%"
-                    height={250}
-                  />
-                  <div className="book-overlay">
-                    <button className="quick-view" title="Xem nhanh">
-                      <FaEye />
-                    </button>
+            {recommendations.map((book, idx) => {
+              // Defensive defaults to avoid runtime errors when data is incomplete
+              const id = book?.book_id ?? `rec-${idx}`;
+              const titleText = book?.title ?? 'Tên sách không xác định';
+              const authorText = book?.author ?? 'Tác giả không rõ';
+              const categoryText = book?.category ?? '';
+              const imageUrl = book?.image_url || '/media/book_images/default.svg';
+              const score = Number(book?.score) || 0;
+              const price = Number(book?.price) || 0;
+              const stock = typeof book?.stock === 'number' ? book.stock : 1;
+              const description = book?.description ?? '';
+
+              return (
+                <div key={id} className="rec-card">
+                  <div className="book-image">
+                    <ProductImage
+                      src={imageUrl}
+                      alt={titleText}
+                      width="100%"
+                      height={250}
+                    />
+                    <div className="book-overlay">
+                      <button className="quick-view" title="Xem nhanh">
+                        <FaEye />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="book-info">
+                    <h3 className="book-title" title={titleText}>
+                      {titleText}
+                    </h3>
+                    
+                    <p className="book-author">
+                      👤 {authorText}
+                    </p>
+                    
+                    <p className="book-category">
+                      📂 {categoryText}
+                    </p>
+
+                    <div className="book-meta">
+                      <span className="similarity-score">
+                        🎯 {(score * 100).toFixed(1)}% phù hợp
+                      </span>
+                    </div>
+
+                    <div className="book-price">
+                      {formatPrice(price)}
+                    </div>
+
+                    <div className="book-actions">
+                      <button 
+                        className="add-to-cart-btn"
+                        onClick={() => addToCart(book)}
+                        disabled={stock === 0}
+                      >
+                        <FaShoppingCart />
+                        {stock > 0 ? 'Thêm vào giỏ' : 'Hết hàng'}
+                      </button>
+                    </div>
+
+                    <div className="book-description" title={description}>
+                      {description.length > 100 
+                        ? description.substring(0, 100) + '...'
+                        : description
+                      }
+                    </div>
                   </div>
                 </div>
-
-                <div className="book-info">
-                  <h3 className="book-title" title={book.title}>
-                    {book.title}
-                  </h3>
-                  
-                  <p className="book-author">
-                    👤 {book.author}
-                  </p>
-                  
-                  <p className="book-category">
-                    📂 {book.category}
-                  </p>
-
-                  <div className="book-meta">
-                    <span className="similarity-score">
-                      🎯 {(book.score * 100).toFixed(1)}% phù hợp
-                    </span>
-                  </div>
-
-                  <div className="book-price">
-                    {formatPrice(book.price)}
-                  </div>
-
-                  <div className="book-actions">
-                    <button 
-                      className="add-to-cart-btn"
-                      onClick={() => addToCart(book)}
-                      disabled={book.stock === 0}
-                    >
-                      <FaShoppingCart />
-                      {book.stock > 0 ? 'Thêm vào giỏ' : 'Hết hàng'}
-                    </button>
-                  </div>
-
-                  <div className="book-description" title={book.description}>
-                    {book.description.length > 100 
-                      ? book.description.substring(0, 100) + '...'
-                      : book.description
-                    }
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
