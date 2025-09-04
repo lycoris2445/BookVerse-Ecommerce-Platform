@@ -1,0 +1,51 @@
+# ========================================
+# RENDER BACKEND ENVIRONMENT VARIABLES
+# ========================================
+# Copy these values to your Render service Environment Variables
+
+# Security Settings (Required)
+DEBUG=0
+SECRET_KEY=your-super-secret-key-generate-a-new-one-here
+
+# Hosts and CORS (Required) 
+ALLOWED_HOSTS=ecomtech.onrender.com,localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=https://ecomtech.onrender.com
+CORS_ALLOWED_ORIGINS=https://ecomtech-domain.tld
+
+# Backend URL for image generation
+BACKEND_URL=https://ecomtech.onrender.com
+
+# Frontend URL for PayPal redirects
+FRONTEND_URL=https://ecomtech-domain.tld
+
+# PayPal Settings
+PAYPAL_MODE=sandbox
+PAYPAL_CLIENT_ID=AQ3aier7n8biTEQWSB-457vXd23i_bgPftxf15QgKKzuco2VpSoG1yLdfCE4NKm9ppb4j_T7NoKxwQJL
+PAYPAL_CLIENT_SECRET=ECCVGUY_4UFqWFz9p4HtKlLpz0xelHvigHN9R9KOoip8xeMD-ZycPf-y5UWvcrxtp3MjVnGMeJJfPjAM
+PAYPAL_SANDBOX_EMAIL=sb-khmoz45933878@business.example.com
+PAYPAL_WEBHOOK_ID=your-webhook-id-here
+
+# Database Option 1: Single DATABASE_URL (Recommended)
+DATABASE_URL=mysql://USER:PASS@HOST:PORT/DB_NAME
+
+# Database Option 2: Individual credentials (Alternative)
+# DB_NAME=your_database_name
+# DB_USER=your_username
+# DB_PASSWORD=your_password
+# DB_HOST=your_host
+# DB_PORT=3306
+
+# ========================================
+# RENDER BUILD & START COMMANDS
+# ========================================
+# Build Command:
+# pip install -r requirements.txt && python manage.py migrate && python manage.py collectstatic --noinput
+
+# Start Command:
+# gunicorn config.wsgi:application --log-file - --timeout 120
+
+# ========================================
+# PAYPAL WEBHOOK URL FOR RENDER
+# ========================================
+# Add this webhook URL to your PayPal app:
+# https://ecomtech.onrender.com/api/v1/payments/paypal/webhook/

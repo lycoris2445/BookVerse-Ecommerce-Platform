@@ -1,0 +1,78 @@
+﻿{
+    "openapi":  "3.0.3",
+    "info":  {
+                 "title":  "E-commerce API (Cloud DB)",
+                 "version":  "1.0.0 (v1)",
+                 "description":  "DRF over existing MariaDB schema: catalog, orders, payments, activities."
+             },
+    "paths":  {
+                  "/api/v1/catalog/authors/":  {
+                                                   "get":  "@{operationId=api_v1_catalog_authors_list; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                               },
+                  "/api/v1/catalog/authors/{AuthorID}/":  {
+                                                              "get":  "@{operationId=api_v1_catalog_authors_retrieve; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                          },
+                  "/api/v1/catalog/books/":  {
+                                                 "get":  "@{operationId=api_v1_catalog_books_list; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                             },
+                  "/api/v1/catalog/books/{BookID}/":  {
+                                                          "get":  "@{operationId=api_v1_catalog_books_retrieve; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                      },
+                  "/api/v1/catalog/categories/":  {
+                                                      "get":  "@{operationId=api_v1_catalog_categories_list; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                  },
+                  "/api/v1/catalog/categories/{CategoryID}/":  {
+                                                                   "get":  "@{operationId=api_v1_catalog_categories_retrieve; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                               },
+                  "/api/v1/catalog/publishers/":  {
+                                                      "get":  "@{operationId=api_v1_catalog_publishers_list; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                  },
+                  "/api/v1/catalog/publishers/{PublisherID}/":  {
+                                                                    "get":  "@{operationId=api_v1_catalog_publishers_retrieve; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                                                },
+                  "/api/v1/users/":  {
+                                         "get":  "@{operationId=api_v1_users_list; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                     },
+                  "/api/v1/users/{id}/":  {
+                                              "get":  "@{operationId=api_v1_users_retrieve; parameters=System.Object[]; tags=System.Object[]; security=System.Object[]; responses=}"
+                                          },
+                  "/api/v1/users/login/":  {
+                                               "post":  "@{operationId=api_v1_users_login_create; tags=System.Object[]; requestBody=; security=System.Object[]; responses=}"
+                                           },
+                  "/api/v1/users/logout/":  {
+                                                "post":  "@{operationId=api_v1_users_logout_create; tags=System.Object[]; security=System.Object[]; responses=}"
+                                            },
+                  "/api/v1/users/me/":  {
+                                            "get":  "@{operationId=api_v1_users_me_retrieve; tags=System.Object[]; security=System.Object[]; responses=}"
+                                        },
+                  "/api/v1/users/register/":  {
+                                                  "post":  "@{operationId=api_v1_users_register_create; tags=System.Object[]; requestBody=; security=System.Object[]; responses=}"
+                                              }
+              },
+    "components":  {
+                       "schemas":  {
+                                       "Author":  "@{type=object; properties=; required=System.Object[]}",
+                                       "Book":  "@{type=object; properties=; required=System.Object[]}",
+                                       "Category":  "@{type=object; properties=; required=System.Object[]}",
+                                       "CustomerOut":  "@{type=object; properties=; required=System.Object[]}",
+                                       "LoginIn":  "@{type=object; properties=; required=System.Object[]}",
+                                       "PaginatedAuthorList":  "@{type=object; required=System.Object[]; properties=}",
+                                       "PaginatedBookList":  "@{type=object; required=System.Object[]; properties=}",
+                                       "PaginatedCategoryList":  "@{type=object; required=System.Object[]; properties=}",
+                                       "PaginatedPublisherList":  "@{type=object; required=System.Object[]; properties=}",
+                                       "PaginatedUserList":  "@{type=object; required=System.Object[]; properties=}",
+                                       "Publisher":  "@{type=object; properties=; required=System.Object[]}",
+                                       "RegisterIn":  "@{type=object; properties=; required=System.Object[]}",
+                                       "User":  "@{type=object; properties=; required=System.Object[]}"
+                                   },
+                       "securitySchemes":  {
+                                               "cookieAuth":  "@{type=apiKey; in=cookie; name=sessionid}"
+                                           }
+                   },
+    "servers":  [
+                    {
+                        "url":  "http://localhost:8000",
+                        "description":  "Local"
+                    }
+                ]
+}

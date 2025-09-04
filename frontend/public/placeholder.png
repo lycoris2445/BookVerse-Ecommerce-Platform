@@ -1,0 +1,10 @@
+<!-- Simple SVG placeholder -->
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="400" viewBox="0 0 300 400">
+  <rect width="300" height="400" fill="#f1f3f4"/>
+  <text x="150" y="180" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#9aa0a6">
+    Không có hình ảnh
+  </text>
+  <text x="150" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#9aa0a6">
+    📚
+  </text>
+</svg>
